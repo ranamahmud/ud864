@@ -258,9 +258,14 @@
           polygon.setEditable(true);
           // Searching within the polygon.
           searchWithinPolygon();
+
           // Make sure the search is re-done if the poly is changed.
           polygon.getPath().addListener('set_at', searchWithinPolygon);
           polygon.getPath().addListener('insert_at', searchWithinPolygon);
+
+          calculateArea();
+           polygon.getPath().addListener('set_at', calculateArea);
+          polygon.getPath().addListener('insert_at', calculateArea);
         });
       }
 
@@ -354,6 +359,11 @@
           drawingManager.setMap(map);
         }
       }
+      function calculateArea(){
+        var area = google.maps.geometry.spherical.computeArea(polygon.getPath());
+        console.log(area);
+
+      }
 
       // This function hides all markers outside the polygon,
       // and shows only the ones within it. This is so that the
@@ -371,8 +381,9 @@
 
     <script async defer
         src=
-        "https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=MYAPIKEY&v=3&callback=initMap">
+        "https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=AIzaSyAgFBpvHFS7bur24IbykayL_3eIWTPJGjc&v=3&callback=initMap">
     </script>
+  
 
   </body>
 </html>
